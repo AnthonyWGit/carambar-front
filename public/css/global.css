@@ -96,6 +96,8 @@ a
 .navbarItem:last-child:hover a
 {
     font-size: 1.3rem;
+    color: white;
+    transition: 0.5s ease-in-out;
 }
 
 
