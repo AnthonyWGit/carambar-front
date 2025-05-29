@@ -91,6 +91,14 @@ a
     font-size: 1.3rem;
 }
 
+.navbarItem:first-child:hover a,
+.navbarItem:nth-child(2):hover a,
+.navbarItem:last-child:hover a
+{
+    font-size: 1.3rem;
+}
+
+
 .navbarItem:nth-child(2)
 {
     border-bottom:var(--thickBlackBorder);
