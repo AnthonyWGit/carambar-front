@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toutes les blagues - Fakembar & Co.</title>
+    <link rel="stylesheet" href="./public/css/global.css">
+</head>
+<body id="#widebody">
+    <header class="header yellowBg">
+        <div class="logo">
+            <a href="/">
+                <img class="logo" src="/assets/images/carambar-logo.png" alt="Carambar Logo">
+                <h1>Fakembar & Co.</h1>
+            </a></div>
+        <navbar class="navbar"><label id="burger-menu" for="toggle">☰</label><input type="checkbox" id="toggle">
+            <ul>
+                <li class="navbarItem"> <a href="/jokes">Toutes les blagues</a></li>
+                <li class="navbarItem">Aléatoire</li>
+                <li class="navbarItem"> <a href="jokeUnique">Sélection</a></li>
+            </ul>
+        </navbar>
+    </header>
+    <div class="placeholder" id="placeholder">
+        Loading...
+    </div>
+</body>
+    <script>
+        // Chargement initial des blagues
+          const apiHost = 'https://fakembar.onrender.com'
+        (async () => {
+            try {
+                  const response = await fetch(`${apiHost}/api/v1/jokes/all`);
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP! Statut: ${response.status}`);
+                }
+                
+                const jokes = await response.json();
+                const container = document.getElementById('placeholder');
+                container.innerHTML = ""
+                // Ajouter toutes les blagues
+                jokes.forEach(joke => {
+                    container.innerHTML += ` ${joke.text} ${joke.answer} `; //${var} for string interpolation
+                });
+                console.log(jokes)
+
+            } catch (error) {
+                console.error('Erreur:', error);
+                document.getElementById('placeholder').innerHTML = 
+                    '<p>Erreur lors du chargement des blagues</p>';
+            }
+        })();
+    </script>
+</html>
