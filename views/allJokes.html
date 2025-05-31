@@ -22,6 +22,7 @@
         </navbar>
     </header>
     <main class="wrapper jokeAll">
+        <p class="temp"> Loading...</p>
     </main>
     <footer class="footer">
         <div class="footerDiv yellowBg">
@@ -33,32 +34,35 @@
         // Chargement initial des blagues
         const apiHost = 'https://fakembar.onrender.com';
         (async () => {
-            const wrapper = document.querySelector(".class")
+            const wrapper = document.querySelector("main.wrapper")
             try {
                 const response = await fetch(`${apiHost}/api/v1/jokes/all`);
                 if (!response.ok) {
                     throw new Error(`Erreur HTTP! Statut: ${response.status}`);
                 }
-                const jokes = await response.json();
-                const newDivPair = document.createElement("div");
-                newDivPair.classList.add("pair")
-                const newDivQuestion = document.createElement("div");
-                newDivQuestion.classList.add("question")
-                const newDivAnswer = document.createElement("div");
-                newDivAnswer.classList.add("answer")
-                const newParagraphQuestion = document.createElement("p")
-                const newParagraphAnswer = document.createElement("p")
-                // Ajouter toutes les blagues
+                document.querySelector(".temp").remove()
+                const jokes = await response.json();                
                 jokes.forEach(joke => {
-                    wrapper.appendChild(newDivPair)
-                    newDivPair.appendChild(newDivQuestion)
-                    newDivPair.appendChild(newDivAnswer)
-                    newDivQuestion.appendChild(newParagraphQuestion)
-                    newDivAnswer.appendChild(newParagraphAnswer)
-                    newParagraphQuestion.innerHTML = `${joke.text}`
-                    newParagraphAnswer.innerHTML = `${joke.answer}`
+                    const newDivPair = document.createElement("div");
+                    newDivPair.classList.add("pair");
+                    
+                    const newDivQuestion = document.createElement("div");
+                    newDivQuestion.classList.add("question");
+                    const newParagraphQuestion = document.createElement("p");
+                    newParagraphQuestion.textContent = joke.text;
+                    newDivQuestion.appendChild(newParagraphQuestion);
+                    
+                    const newDivAnswer = document.createElement("div");
+                    newDivAnswer.classList.add("answer");
+                    const newParagraphAnswer = document.createElement("p");
+                    newParagraphAnswer.textContent = joke.answer;
+                    newDivAnswer.appendChild(newParagraphAnswer);
+                    
+                    newDivPair.appendChild(newDivQuestion);
+                    newDivPair.appendChild(newDivAnswer);
+                    
+                    wrapper.appendChild(newDivPair);
                 });
-                console.log(jokes)
 
             } catch (error) {
                 console.error('Erreur:', error);
