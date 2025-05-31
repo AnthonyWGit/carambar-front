@@ -46,40 +46,34 @@
                 try {
                     // Loading print
                     slideshowContainer.innerHTML = '<p class="temp"><span class="loader"></span> Chargement des blagues...</p>';
-                    const response = await fetch(`${apiHost}/api/v1/jokes/all`);
+                    const response = await fetch(`${apiHost}/api/v1/jokes/1`); //fetch the joke id=1 in db 
                     if (!response.ok) {
                         throw new Error(`Erreur HTTP! Statut: ${response.status}`);
                     }
                     const jokes = await response.json();
-                    
-                    // Check if fetch has succeeded AND there is at least one joke in DB
-                    if (!jokes || jokes.length === 0) {
-                        throw new Error('Aucune blague trouvée');
-                    }
+        
                     // Empty the container
                     slideshowContainer.innerHTML = '';
                     // Create the slides
-                    jokes.forEach((joke, index) => {
-                        const slide = document.createElement('div');
-                        slide.className = 'mySlides fade';
-                        if (index === 0) slide.style.display = 'block';
-                        
-                        const jokeContent = document.createElement('div');
-                        jokeContent.className = 'joke-content';
-                        
-                        const question = document.createElement('p');
-                        question.className = 'joke-question';
-                        question.textContent = joke.text;
-                        
-                        const answer = document.createElement('p');
-                        answer.className = 'joke-answer';
-                        answer.textContent = joke.answer;
-                        
-                        jokeContent.appendChild(question);
-                        jokeContent.appendChild(answer);
-                        slide.appendChild(jokeContent);
-                        slideshowContainer.appendChild(slide);
-                    });
+                    const slide = document.createElement('div');
+                    slide.className = 'mySlides fade';
+                    if (index === 0) slide.style.display = 'block';
+                    
+                    const jokeContent = document.createElement('div');
+                    jokeContent.className = 'joke-content';
+                    
+                    const question = document.createElement('p');
+                    question.className = 'joke-question';
+                    question.textContent = joke.text;
+                    
+                    const answer = document.createElement('p');
+                    answer.className = 'joke-answer';
+                    answer.textContent = joke.answer;
+                    
+                    jokeContent.appendChild(question);
+                    jokeContent.appendChild(answer);
+                    slide.appendChild(jokeContent);
+                    slideshowContainer.appendChild(slide);
                     
                     // navi arrows
                     const prevLink = document.createElement('a');
@@ -94,17 +88,7 @@
                     nextLink.innerHTML = '❯';
                     slideshowContainer.appendChild(nextLink);
                     
-                    // navi dots
-                    const dotContainer = document.createElement('div');
-                    dotContainer.className = 'dot-container';
-                    //create a navi dot for each index
-                    jokes.forEach((_, index) => {
-                        const dot = document.createElement('span');
-                        dot.className = 'dot';
-                        if (index === 0) dot.classList.add('active');
-                        dot.setAttribute('data-index', index + 1);
-                        dotContainer.appendChild(dot);
-                    });
+                    // navi input
                     
                     slideshowContainer.appendChild(dotContainer);
                     
@@ -115,7 +99,7 @@
                     const slides = document.getElementsByClassName("mySlides");
                     const dots = document.getElementsByClassName("dot");
                     
-                    //When the page is loaded just show slide 1 / without it it shows all jokes at startup 
+                    //When the page is loaded just show slide 1
                     showSlides(slideIndex);
                     
                     //event listeners for arrows
