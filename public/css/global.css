@@ -94,15 +94,6 @@ a
     font-size: 1.3rem;
 }
 
-.navbarItem:first-child:hover a,
-.navbarItem:nth-child(2):hover a,
-.navbarItem:last-child:hover a
-{
-    font-size: 1.3rem;
-    color: white;
-    transition: 0.5s ease-in-out;
-}
-
 .navbarItem:nth-child(2)
 {
     border-bottom:var(--thickBlackBorder);
@@ -162,4 +153,232 @@ a
     {
         border-bottom: var(--thickBlackBorder);
     }
+}
+
+/****************************SLIDERS***************************/
+#slider
+{
+    width: 750px;
+    height: 500px;
+    position: relative;
+}
+
+.sliderWrapper
+{
+    display: none;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+        /* Slideshow container */
+        .slideshow-container {
+            max-width: 800px;
+            position: relative;
+            margin: auto;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Next & previous buttons */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        /* Position the "next button" to the right */
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        /* On hover, add a black background */
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        /* The dots/bullets/indicators */
+        .dot-container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 5px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active, .dot:hover {
+            background-color: #717171;
+        }
+
+        /* Fading animation */
+        .fade {
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        @keyframes fade {
+            from {opacity: .4} 
+            to {opacity: 1}
+        }
+
+        /* Joke content styles */
+        .joke-content {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .joke-question {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .joke-answer {
+            font-size: 1.2rem;
+            color: #d35400;
+            font-style: italic;
+        }
+
+                /* ADD THIS RULE TO SHOW FIRST SLIDE BY DEFAULT */
+        .mySlides:first-child {
+            display: block;
+        }
+
+        /* ADD THIS TO PREVENT FLICKER */
+        .slideshow-container {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .slideshow-container.initialized {
+            opacity: 1;
+        }
+
+/******************************ALL******************/
+
+.wrapper.jokeAll
+{
+    flex-wrap: wrap;
+    align-items: normal;
+}
+
+.pair
+{
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    margin: 5px;
+    gap: 15px;
+}
+.question
+{
+    border: solid 3px red;
+    background-color: black;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    color: yellow;
+}
+
+.answer
+{
+    border: solid 3px silver;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    background-color: grey;
+    color: azure;
+}
+
+.question,.answer
+{
+    border-radius: 15px;
+    padding: 10px;
 }
