@@ -40,7 +40,7 @@
                 if (!response.ok) {
                     throw new Error(`Erreur HTTP! Statut: ${response.status}`);
                 }
-                document.querySelector(".temp").remove()
+                document.querySelector(".temp").remove();
                 const jokes = await response.json();                
                 jokes.forEach(joke => {
                     const newDivPair = document.createElement("div");
