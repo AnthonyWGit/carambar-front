@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toutes les blagues - Fakembar & Co.</title>
+    <link rel="stylesheet" href="../public/css/global.css">
+</head>
+<body id="wideBody">
+    <header class="header yellowBg">
+        <div class="logo">
+            <a href="../index.html">
+                <img class="logo" src="/assets/images/carambar-logo.png" alt="Carambar Logo">
+                <h1>Fakembar & Co.</h1>
+            </a></div>
+        <navbar class="navbar"><label id="burger-menu" for="toggle">☰</label><input type="checkbox" id="toggle">
+            <ul>
+            <li class="navbarItem"> <a href="./allJokes.html">Toutes les blagues</a></li>
+            <li class="navbarItem">Aléatoire</li>
+            <li class="navbarItem"> <a href="./jokeUnique.html">Sélection</a></li>
+            </ul>
+        </navbar>
+    </header> 
+    <main class="wrapper">
+        <div class="slideshow-container">
+            <p class="temp"><span class="loader"></span> Chargement des blagues...</p>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <div class="footerDiv yellowBg">
+            <p>© 2025 Fakembar & Co. - Tous droits réservés</p>
+        </div>
+    </footer>
+    
+    <script>
+        const apiHost = 'https://fakembar.onrender.com';
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const slideshowContainer = document.querySelector('.slideshow-container');
+            if (!slideshowContainer) {
+                console.error('Conteneur du carrousel introuvable');
+                return;
+            }
+            (async () => {
+                try {
+                    // Loading print
+                    slideshowContainer.innerHTML = '<p class="temp"><span class="loader"></span> Chargement des blagues...</p>';
+                    const response = await fetch(`${apiHost}/api/v1/jokes/all`);
+                    if (!response.ok) {
+                        throw new Error(`Erreur HTTP! Statut: ${response.status}`);
+                    }
+                    const jokes = await response.json();
+                    
+                    // Check if fetch has succeeded AND there is at least one joke in DB
+                    if (!jokes || jokes.length === 0) {
+                        throw new Error('Aucune blague trouvée');
+                    }
+                    // Empty the container
+                    slideshowContainer.innerHTML = '';
+                    // Create the slides
+                    jokes.forEach((joke, index) => {
+                        const slide = document.createElement('div');
+                        slide.className = 'mySlides fade';
+                        if (index === 0) slide.style.display = 'block';
+                        
+                        const jokeContent = document.createElement('div');
+                        jokeContent.className = 'joke-content';
+                        
+                        const question = document.createElement('p');
+                        question.className = 'joke-question';
+                        question.textContent = joke.text;
+                        
+                        const answer = document.createElement('p');
+                        answer.className = 'joke-answer';
+                        answer.textContent = joke.answer;
+                        
+                        jokeContent.appendChild(question);
+                        jokeContent.appendChild(answer);
+                        slide.appendChild(jokeContent);
+                        slideshowContainer.appendChild(slide);
+                    });
+                    
+                    // navi arrows
+                    const prevLink = document.createElement('a');
+                    prevLink.className = 'prev';
+                    prevLink.setAttribute('data-direction', '-1');
+                    prevLink.innerHTML = '❮';
+                    slideshowContainer.appendChild(prevLink);
+                    
+                    const nextLink = document.createElement('a');
+                    nextLink.className = 'next';
+                    nextLink.setAttribute('data-direction', '1');
+                    nextLink.innerHTML = '❯';
+                    slideshowContainer.appendChild(nextLink);
+                    
+                    // navi dots
+                    const dotContainer = document.createElement('div');
+                    dotContainer.className = 'dot-container';
+                    //create a navi dot for each index
+                    jokes.forEach((_, index) => {
+                        const dot = document.createElement('span');
+                        dot.className = 'dot';
+                        if (index === 0) dot.classList.add('active');
+                        dot.setAttribute('data-index', index + 1);
+                        dotContainer.appendChild(dot);
+                    });
+                    
+                    slideshowContainer.appendChild(dotContainer);
+                    
+                    // Slideshow is initialized
+                    slideshowContainer.classList.add('initialized');
+                
+                    let slideIndex = 1;
+                    const slides = document.getElementsByClassName("mySlides");
+                    const dots = document.getElementsByClassName("dot");
+                    
+                    //When the page is loaded just show slide 1 / without it it shows all jokes at startup 
+                    showSlides(slideIndex);
+                    
+                    //event listeners for arrows
+                    prevLink.addEventListener('click', () => plusSlides(-1));
+                    nextLink.addEventListener('click', () => plusSlides(1));
+                    //Make the dots clickable
+                    for (let i = 0; i < dots.length; i++) {
+                        dots[i].addEventListener('click', () => currentSlide(i + 1));
+                    }
+                    
+                    function plusSlides(n) {
+                        showSlides(slideIndex += n);
+                    }
+                    
+                    function currentSlide(n) {
+                        showSlides(slideIndex = n);
+                    }
+                    
+                    function showSlides(n) {
+                        if (slides.length === 0) return; // do nothing if there are no slides
+                        
+                        if (n > slides.length) slideIndex = 1; // when click right at last slide jump to 1 again 
+                        if (n < 1) slideIndex = slides.length;
+                        
+                        for (let i = 0; i < slides.length; i++) {
+                            slides[i].style.display = "none";
+                        }
+                        
+                        for (let i = 0; i < dots.length; i++) {
+                            dots[i].className = dots[i].className.replace(" active", "");
+                        }
+                        
+                        if (slides[slideIndex-1]) {
+                            slides[slideIndex-1].style.display = "block";
+                            if (dots[slideIndex-1]) {
+                                dots[slideIndex-1].className += " active";
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.error('Erreur:', error);
+                    slideshowContainer.innerHTML = `<p class="temp">Erreur lors du chargement des blagues: ${error.message}</p>`;
+                }
+            })();
+        });
+    </script>
+</body>
+</html>
