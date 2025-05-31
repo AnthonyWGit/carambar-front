@@ -6,7 +6,7 @@
     <title>Toutes les blagues - Fakembar & Co.</title>
     <link rel="stylesheet" href="../public/css/global.css">
 </head>
-<body id="#widebody">
+<body id="wideBody">
     <header class="header yellowBg">
         <div class="logo">
             <a href="../index.html">
@@ -21,10 +21,7 @@
             </ul>
         </navbar>
     </header>
-    <main class="wrapper">
-        <div class="placeholder" id="placeholder">
-            Loading...
-        </div>
+    <main class="wrapper jokeAll">
     </main>
     <footer class="footer">
         <div class="footerDiv yellowBg">
@@ -36,25 +33,38 @@
         // Chargement initial des blagues
         const apiHost = 'https://fakembar.onrender.com';
         (async () => {
+            const wrapper = document.querySelector(".class")
             try {
                 const response = await fetch(`${apiHost}/api/v1/jokes/all`);
                 if (!response.ok) {
                     throw new Error(`Erreur HTTP! Statut: ${response.status}`);
                 }
-                
                 const jokes = await response.json();
-                const container = document.getElementById('placeholder');
-                container.innerHTML = ""
+                const newDivPair = document.createElement("div");
+                newDivPair.classList.add("pair")
+                const newDivQuestion = document.createElement("div");
+                newDivQuestion.classList.add("question")
+                const newDivAnswer = document.createElement("div");
+                newDivAnswer.classList.add("answer")
+                const newParagraphQuestion = document.createElement("p")
+                const newParagraphAnswer = document.createElement("p")
                 // Ajouter toutes les blagues
                 jokes.forEach(joke => {
-                    container.innerHTML += ` ${joke.text} ${joke.answer} `; //${var} for string interpolation
+                    wrapper.appendChild(newDivPair)
+                    newDivPair.appendChild(newDivQuestion)
+                    newDivPair.appendChild(newDivAnswer)
+                    newDivQuestion.appendChild(newParagraphQuestion)
+                    newDivAnswer.appendChild(newParagraphAnswer)
+                    newParagraphQuestion.innerHTML = `${joke.text}`
+                    newParagraphAnswer.innerHTML = `${joke.answer}`
                 });
                 console.log(jokes)
 
             } catch (error) {
                 console.error('Erreur:', error);
-                document.getElementById('placeholder').innerHTML = 
-                    '<p>Erreur lors du chargement des blagues</p>';
+                const newParagraph = document.createElement("p");
+                wrapper.appendChild(newParagraph);
+                newParagraph.innerHTML = "Erreur lors du chargement des blagues";
             }
         })();
     </script>
