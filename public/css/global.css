@@ -296,8 +296,7 @@ a
 
 /* Fading animation */
 .fade {
-    animation-name: fade;
-    animation-duration: 1.5s;
+    animation: fade linear 1.25s;
 }
 
 @keyframes fade {
