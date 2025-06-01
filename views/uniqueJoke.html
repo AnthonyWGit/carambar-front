@@ -15,9 +15,9 @@
             </a></div>
         <navbar class="navbar"><label id="burger-menu" for="toggle">☰</label><input type="checkbox" id="toggle">
             <ul>
-            <li class="navbarItem"> <a href="./allJokes.html">Toutes les blagues</a></li>
-            <li class="navbarItem">Aléatoire</li>
-            <li class="navbarItem"> <a href="./jokeUnique.html">Sélection</a></li>
+                <li class="navbarItem"> <a href="./allJokes.html">Toutes les blagues</a></li>
+                <li class="navbarItem"> <a href="./randomJoke.html">Aléatoire</a>
+                <li class="navbarItem"> <a href="./uniqueJoke.html">Sélection</a></li>
             </ul>
         </navbar>
     </header> 
@@ -42,6 +42,7 @@
         //wait for the document to be loaded
         document.addEventListener('DOMContentLoaded', function() {
             const slideshowContainer = document.querySelector('.slideshow-container');
+            let isFirstJoke = true;
             if (!slideshowContainer) {
                 console.error('Conteneur du carrousel introuvable');
                 return;
@@ -113,7 +114,8 @@
                     // Load the first joke 
                     await loadJoke(currentId, question, answer);
                     slideshowContainer.classList.add("initialized")
-                    
+                    isFirstJoke = false;
+
                     // Even listeners
                     prevLink.addEventListener('click', () => {
                         // Loop to the last joke if we are at the first one 
@@ -124,6 +126,7 @@
                         }
                         idInput.value = currentId;
                         loadJoke(currentId, question, answer);
+                        restartAnimation(slide);
                     });
                     
                     nextLink.addEventListener('click', () => {
@@ -135,6 +138,7 @@
                         }
                         idInput.value = currentId;
                         loadJoke(currentId, question, answer);
+                        restartAnimation(slideshowContainer);
                     });
                     
                     goButton.addEventListener('click', () => {
@@ -184,7 +188,18 @@
                     answerElement.textContent = error.message;
                 }
             }
-        });
+        })
+                    //func to restart anim
+            function restartAnimation(element) {
+                // Remove animation class
+                element.classList.remove("fade");
+                
+                // Trigger reflow - magic that resets the animation
+                void element.offsetWidth;
+                
+                // Re-add animation class
+                element.classList.add("fade");
+            };
     </script>
 </body>
 </html>
