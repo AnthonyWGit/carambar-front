@@ -21,7 +21,7 @@ __5. Plan du site__
 - Consulter toutes les blagues : **/alljokes.html**
 - Consulter une blague aléatoirement : **/random.html**
 - Consulter une blague particulière : **/uniqueJoke.html** </br>
-    - *Note : cette page contient un script javascript qui va chercher une blague avec un ID unique via le lien **http://fakembar.onrender.com/api/v1/joke/{id}***
+    - *Note : cette page contient un script javascript qui va chercher une blague avec un ID unique via le lien **http://fakembar.onrender.com/api/v1/jokes/{id}**
 
 __6. Licence__
 
