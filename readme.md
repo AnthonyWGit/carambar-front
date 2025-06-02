@@ -23,6 +23,10 @@ __5. Plan du site__
 - Consulter une blague particulière : **/uniqueJoke.html** </br>
     - *Note : cette page contient un script javascript qui va chercher une blague avec un ID unique via le lien **http://fakembar.onrender.com/api/v1/jokes/{id}**
 
-__6. Licence__
+__6. Repo back__
+
+**https://github.com/AnthonyWGit/fakembar-back/settings**
+
+__7. Licence__
 
 MIT
