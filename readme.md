@@ -1,7 +1,7 @@
 # **Fakembar : Génération de pages statiques avec récupération de données via API**
 __1. URL du rendu__
 
-https://anthonywgit.github.io/carambar-front/index.html
+https://anthonywgit.github.io/fakembar-front/index.html
 
 __2. Résmé du projet__
 
