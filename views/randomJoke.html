@@ -35,17 +35,33 @@
     </footer>
     <script defer>
         document.addEventListener("DOMContentLoaded", () => {
+            //fetch a random joke with reload if the same. If low number of jokes it is terrible performance if 10000 users would click
+            //on the same time. Even then, extra load on the server. Get rid of memory + while loop to allow same joke loading.
+
             const apiHost = "https://fakembar.onrender.com"; //api base adress
             let isFirstJoke = true; //value used to controll animation replay 
-            
+            let memory; //used later to autofetch again if we land in the same joke 
             async function loadjoke() {
                 try {//loading msg
                     const placeholder = document.querySelector(".placeholder");
                     if (placeholder) placeholder.textContent = "Chargement...";
                     //fetch data 
-                    const response = await fetch(`${apiHost}/api/v1/jokes/random`);
+                    let response = await fetch(`${apiHost}/api/v1/jokes/random`);
                     if (!response.ok) throw new Error(`Erreur ${response.status}`); //err path 
-                    return await response.json(); //the data
+                    let data = await response.json(); //the data
+                    console.log(data);
+                    if (memory !== "undefined" && memory === data.id) // if the fetch data is the same
+                    {
+                        while (data.id == memory)
+                        {
+                            response = await fetch(`${apiHost}/api/v1/jokes/random`);
+                            if (!response.ok) throw new Error(`Erreur ${response.status}`);
+                            console.log("retried", data.id, memory);
+                            data = await response.json();
+                        }                        
+                    }
+                    memory = data.id;
+                    return data;
                 } catch (error) {
                     console.error("Erreur:", error);
                     const element = document.querySelector(".placeholder") || document.querySelector(".pair");
