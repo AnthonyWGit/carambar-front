@@ -97,6 +97,7 @@
                     idNavContainer.className = 'id-navigation';
                     
                     const idInput = document.createElement('input');
+                    //set defaults
                     idInput.type = 'number';
                     idInput.id = 'joke-id-input';
                     idInput.min = '1';
@@ -113,7 +114,7 @@
                     
                     // Load the first joke 
                     await loadJoke(currentId, question, answer);
-                    slideshowContainer.classList.add("initialized")
+                    slideshowContainer.classList.add("initialized");
                     isFirstJoke = false;
 
                     // Even listeners
@@ -194,7 +195,7 @@
                 // Remove animation class
                 element.classList.remove("fade");
                 
-                // Trigger reflow - magic that resets the animation
+                // Trigger reflow - magic that resets the animation cf csstrick link
                 void element.offsetWidth;
                 
                 // Re-add animation class
