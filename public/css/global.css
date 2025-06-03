@@ -35,6 +35,14 @@ a
 .logo img
 {
     border-bottom: none;
+    border: solid 5px black;
+    border-radius: 15px;
+}
+.logo h1
+{
+    opacity: 0.75;
+    font-style: italic;
+    color: red;
 }
 #burger-menu, #toggle
 {
@@ -413,4 +421,9 @@ a
     100%{
         opacity: 1;
     }
+}
+
+.text-align-center
+{
+    text-align : center;
 }
